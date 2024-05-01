@@ -134,7 +134,9 @@ router.put("/changepassword", function (req, res, next) {
       const check = bcrypt.compareSync(password, user.password);
 
       if (!check) {
-        return res.status(400).send("Mật khẩu không chính xác");
+        return res
+          .status(400)
+          .send({ message: "Mật khẩu không chính xác", result });
       }
 
       const salt = bcrypt.genSaltSync(10);
@@ -147,8 +149,7 @@ router.put("/changepassword", function (req, res, next) {
           if (err) {
             return res.status(500).json(err.message);
           }
-
-          res.json("Bạn đã đổi mật khẩu thành công");
+          res.json({ message: "Bạn đã đổi mật khẩu thành công", result });
         }
       );
     }
